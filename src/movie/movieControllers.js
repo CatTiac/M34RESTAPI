@@ -24,3 +24,51 @@ exports.listMovies = async (req, res) => {
         res.status(500).send({ err: error.message });
     }
 };
+
+//**********UNFINISHED***************************************************
+
+exports.updateMovie = async (req, res) => {
+    try {
+        const updateMovie = await Movie.findOne( { 
+            where: {
+            title: req.body.title, 
+            actors: req.body.actors 
+        }});
+        if (req.body.title) {
+            updateMovie.title = req.body.newTitle
+        }
+        if (req.body.actors) {
+            updateMovie.actors = req.body.newActors
+        }
+        updateMovie.save( updateMovie );
+
+        res.status(200).send( updateMovie );
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({ err: error.message });
+    }
+};
+
+// exports.deleteMovie = async (req, res) => {
+//     try {
+//         const deleteMovie = await Movie.findOneAndRemove( { title: req.newTitle.title });
+//         res.status(200).send({ movie: deleteMovie });
+//     } catch (error) {
+//         console.log(error);
+//         res.status(500).send({ err: error.message });
+//     }
+// };
+
+exports.deleteMovie = async (req, res) => {
+    try {
+        const deleteMovie = await Movie.deleteOne( { 
+            where: {
+            title: req.body.title
+        }});
+        res.status(200).send( deleteMovie );
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({ err: error.message });
+    }
+};
+

@@ -8,4 +8,8 @@ movieRouter.post("/movie", addMovie);
 //Get and delete requests don't receive body
 movieRouter.get("/movie", listMovies);
 
+movieRouter.put("/movie", updateMovie);
+
+movieRouter.delete("/movie", deleteMovie);
+
 module.exports = movieRouter;
