@@ -27,22 +27,69 @@ exports.listMovies = async (req, res) => {
 
 //**********UNFINISHED***************************************************
 
+
 exports.updateMovie = async (req, res) => {
     try {
-        const updateMovie = await Movie.findOne( { 
-            where: {
-            title: req.body.title, 
-            actors: req.body.actors 
-        }});
-        if (req.body.title) {
-            updateMovie.title = req.body.newTitle
-        }
-        if (req.body.actors) {
-            updateMovie.actors = req.body.newActors
-        }
-        updateMovie.save( updateMovie );
-
+        const updateMovie = await Movie.updateOne( 
+            { [req.body.filterKey]: req.body.filterVal },
+            { [req.body.updateKey]: req.body.updateVal },
+        );
         res.status(200).send( updateMovie );
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({ err: error.message });
+    }
+};
+
+// exports.updateMovie = async (req, res) => {
+//     try {
+//         const filter = { _id: req.params.id };
+//         const update = req.body;
+//         const options = { new: true };
+
+//         const updateMovie = await Movie.findOneAndUpdate( 
+//             filter, update, options);
+//         res.status(200).send( updateMovie );
+//     } catch (error) {
+//         console.log(error);
+//         res.status(500).send({ err: error.message });
+//     }
+// };
+
+// exports.updateMovie = async (req, res) => {
+//     try {
+//         const updateMovie = await Movie.findOne( { 
+//             where: {
+//             title: req.body.title, 
+//             actors: req.body.actors 
+//         }});
+//         if (req.body.title) {
+//             updateMovie.title = req.body.newTitle
+//         }
+//         if (req.body.actors) {
+//             updateMovie.actors = req.body.newActors
+//         }
+//         updateMovie.save( updateMovie );
+
+//         res.status(200).send( updateMovie );
+//     } catch (error) {
+//         console.log(error);
+//         res.status(500).send({ err: error.message });
+//     }
+// };
+
+//**************UNFINISHED DELETE FUNCTIONALITY*********************/
+
+exports.deleteMovie = async (req, res) => {
+    try {
+        const deletedMovie = await Movie.deleteOne( {
+            [req.params.filterKey]: req.params.deleteVal,
+        });
+        if (deletedMovie.deletedCount > 0) {
+        res.status(200).send( { message: 'Deleted movie'} );
+        } else {
+            throw new Error("Nope");
+        }
     } catch (error) {
         console.log(error);
         res.status(500).send({ err: error.message });
@@ -59,16 +106,16 @@ exports.updateMovie = async (req, res) => {
 //     }
 // };
 
-exports.deleteMovie = async (req, res) => {
-    try {
-        const deleteMovie = await Movie.deleteOne( { 
-            where: {
-            title: req.body.title
-        }});
-        res.status(200).send( deleteMovie );
-    } catch (error) {
-        console.log(error);
-        res.status(500).send({ err: error.message });
-    }
-};
+// exports.deleteMovie = async (req, res) => {
+//     try {
+//         const deleteMovie = await Movie.deleteOne( { 
+//             where: {
+//             title: req.body.title
+//         }});
+//         res.status(200).send( deleteMovie );
+//     } catch (error) {
+//         console.log(error);
+//         res.status(500).send({ err: error.message });
+//     }
+// };
 

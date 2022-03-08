@@ -8,8 +8,11 @@ movieRouter.post("/movie", addMovie);
 //Get and delete requests don't receive body
 movieRouter.get("/movie", listMovies);
 
-movieRouter.put("/movie", updateMovie);
+// movieRouter.patch("/movie/:id", updateMovie);
+movieRouter.patch("/movie", updateMovie);
 
-movieRouter.delete("/movie", deleteMovie);
+// movieRouter.delete("/movie", deleteMovie);
+//Below - :filterKey/:filterVal = params after http;//localhost:5000/movie/
+movieRouter.delete("/movie/:filterKey/:deleteVal", deleteMovie);
 
 module.exports = movieRouter;
