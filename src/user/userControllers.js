@@ -4,15 +4,16 @@ const User = require("./userModel");
 exports.addUser = async (req, res) => {
   try {
     const newUser = await User.create(req.body);
+    console.log(1);
     //sign = create a token(param = key name: what is stored, basis for algorithm)
     const token = await jwt.sign({ _id: newUser._id }, process.env.SECRET);
-    res.status(200).send({
-      user: newUser.username,
-      token,
-    });
+    console.log(2);
+    res.status(200).send({ user: newUser.username, token });
+    console.log(3);
   } catch (error) {
     console.log(error);
     res.status(500).send({ err: error.message });
+    console.log(4);
   }
 };
 
@@ -35,6 +36,24 @@ exports.updatePassword = async (req, res) => {
       res.status(200).send({ message: "Successfully updated" });
     } else {
       throw new Error("Did not update");
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ err: error.message });
+  }
+};
+
+exports.deleteUser = async (req, res) => {
+  try {
+    const deletedUser = await User.deleteOne( {
+      [req.params.filterKey]: req.params.deleteVal,
+    });
+    console.log(1);
+    if (deletedUser.deletedCount > 0) {
+      res.status(200).send( { message: 'Deleted user' } )
+      console.log(2);
+    } else {
+      throw new Error('Nope');
     }
   } catch (error) {
     console.log(error);

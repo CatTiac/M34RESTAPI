@@ -12,7 +12,7 @@ movieRouter.get("/movie", listMovies);
 movieRouter.patch("/movie", updateMovie);
 
 // movieRouter.delete("/movie", deleteMovie);
-//Below - :filterKey/:filterVal = params
+//Below - :filterKey/:deleteVal = params
 movieRouter.delete("/movie/:filterKey/:deleteVal", deleteMovie);
 
 module.exports = movieRouter;
