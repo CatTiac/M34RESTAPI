@@ -35,7 +35,9 @@ exports.checkToken = async (req, res, next) => {
   try {
     //Below - Method chain - takes token string and removes Bearer
     //verify decodes token by running it backwards (token, secret)
-    const decodedToken = await jwt.verify(req.header("Authorization").replace("Bearer ", ""), process.env.SECRET);
+    const decodedToken = await jwt.verify(
+      req.header("Authorization").replace("Bearer ", ""), process.env.SECRET);
+    // const decodedToken = await jwt.verify(req.header("Authorization").replace("Bearer ", ""), process.env.SECRET);
     //Below - Assigns decoded token to req.user with unique id
     req.user = await User.findById(decodedToken._id);
     if (req.user) {

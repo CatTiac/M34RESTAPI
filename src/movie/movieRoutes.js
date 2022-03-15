@@ -9,7 +9,7 @@ movieRouter.post("/movie", addMovie);
 movieRouter.get("/movie", listMovies);
 
 // movieRouter.patch("/movie/:id", updateMovie);
-movieRouter.patch("/movie", updateMovie);
+movieRouter.patch("/movie/:filterKey/:filterVal", updateMovie);
 
 // movieRouter.delete("/movie", deleteMovie);
 //Below - :filterKey/:deleteVal = params
