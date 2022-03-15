@@ -47,7 +47,7 @@ exports.updatePassword = async (req, res) => {
 exports.listUsers = async (req, res) => {
   try {
     const userList = await User.find({});
-    console.log(list1);
+    // console.log("list1");
     res.status(200).send({ allUsers: userList });
   } catch (error) {
     console.log(error);
