@@ -4,22 +4,23 @@ const User = require("./userModel");
 exports.addUser = async (req, res) => {
   try {
     const newUser = await User.create(req.body);
-    console.log(1);
     //sign = create a token(param = key name: what is stored, basis for algorithm)
     const token = await jwt.sign({ _id: newUser._id }, process.env.SECRET);
-    console.log(2);
+    // console.log(1);
     res.status(200).send({ user: newUser.username, token });
-    console.log(3);
+    // console.log(2);
   } catch (error) {
     console.log(error);
     res.status(500).send({ err: error.message });
-    console.log(4);
   }
 };
 
-exports.loginUser = async (req, res) => {
+exports.login = async (req, res) => {
   try {
+    // const token = await jwt.sign({ _id: req.user._id }, process.env.SECRET);
+    // console.log(3);
     res.status(200).send({ user: req.user.username });
+    // console.log(4);
   } catch (error) {
     console.log(error);
     res.status(500).send({ err: error.message });
@@ -35,8 +36,17 @@ exports.updatePassword = async (req, res) => {
     if (updatedUser.modifiedCount > 0) {
       res.status(200).send({ message: "Successfully updated" });
     } else {
-      throw new Error("Did not update");
+      throw new Error("Updated? Nope");
     }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ err: error.message });
+  }
+};
+
+exports.listUsers = async (req, res) => {
+  try {
+    const userList = await User.find({});
   } catch (error) {
     console.log(error);
     res.status(500).send({ err: error.message });
@@ -48,10 +58,10 @@ exports.deleteUser = async (req, res) => {
     const deletedUser = await User.deleteOne( {
       [req.params.filterKey]: req.params.deleteVal,
     });
-    console.log(1);
+    // console.log(1);
     if (deletedUser.deletedCount > 0) {
       res.status(200).send( { message: 'Deleted user' } )
-      console.log(2);
+      // console.log(2);
     } else {
       throw new Error('Nope');
     }
